@@ -6,7 +6,7 @@ pipeline {
         artifactId = 'message-producer'
         version = '0.0.1-SNAPSHOT'
         jarFile = "${artifactId}-${version}.jar"
-        registry = "172.18.0.1:8083"
+        registry = "localhost:8083"
         groupId = 'th.co.bitfactory.testkafka'
     }
 
