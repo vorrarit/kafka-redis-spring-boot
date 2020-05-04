@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        stage('Archive Artifact') {
+        stage('Archive') {
             steps {
                 unstash 'jar-file'
 

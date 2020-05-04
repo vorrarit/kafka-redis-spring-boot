@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.9.RELEASE"
 	kotlin("jvm") version "1.3.71"
 	kotlin("plugin.spring") version "1.3.71"
+	`maven-publish`
 }
 
 group = "th.co.bitfactory.testkafka"
@@ -35,5 +36,32 @@ tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
+	}
+}
+
+val sourcesJar by tasks.registering(Jar::class) {
+	classifier = "sources"
+	from(sourceSets.main.get().allSource)
+}
+
+publishing {
+	repositories {
+		maven {
+			url = uri("http://localhost:8081/repository/maven-snapshots")
+			credentials {
+				username = "admin"
+				password = "password"
+			}
+		}
+	}
+
+	publications {
+		create<MavenPublication>("default") {
+			artifact(project.file("file:dummy:class.ext"))
+
+			//from(org.gradle.api.plugins.internal.JvmPluginsHelper.findJavaComponent(project.components))
+			from(components["java"])
+			//artifact(sourcesJar.get())
+		}
 	}
 }
