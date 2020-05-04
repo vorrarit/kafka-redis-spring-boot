@@ -33,9 +33,18 @@ pipeline {
                 /opt/gradle/gradle-6.3/bin/gradle publish
                 cd ..
                 '''
+
+                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
             }
         }
 
+        stage('Image') {
+            steps {
+                unstash 'jar-file'
+
+                def testImage = docker.build("message-producer", "./message-producer/deployment/resources")
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying ...'
