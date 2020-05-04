@@ -6,6 +6,7 @@ pipeline {
         artifactId = 'message-producer'
         version = '0.0.1-SNAPSHOT'
         jarFile = "${artifactId}-${version}.jar"
+        registry = "172.18.0.1:8083"
         groupId = 'th.co.bitfactory.testkafka'
     }
 
@@ -43,7 +44,8 @@ pipeline {
                 script {
                     unstash 'jar-file'
 
-                    def testImage = docker.build("message-producer", "./message-producer/deployment/resources")
+                    def testImage = docker.build("${env.registry}/${env.artifactId}:${env.version}", "-f ./message-producer/deployment/resources/Dockerfile ./message-producer")
+                    testImage.push()
                 }
             }
         }
