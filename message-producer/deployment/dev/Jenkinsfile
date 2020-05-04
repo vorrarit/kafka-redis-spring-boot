@@ -5,7 +5,7 @@ pipeline {
         subProjectPath = 'message-producer'
         artifactId = 'message-producer'
         version = '0.0.1-SNAPSHOT'
-        jarFile = "${artifcatId}-${version}.jar"
+        jarFile = "${artifactId}-${version}.jar"
         groupId = 'th.co.bitfactory.testkafka'
     }
 
