@@ -5,8 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building ...'
-
-                sh 'gradle bootJar'
+                cd message-producer
+                sh '/opt/gradle/gradle-6.3/bin/gradle bootJar'
             }
         }
 
