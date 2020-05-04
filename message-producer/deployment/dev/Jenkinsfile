@@ -40,9 +40,11 @@ pipeline {
 
         stage('Image') {
             steps {
-                unstash 'jar-file'
+                script {
+                    unstash 'jar-file'
 
-                def testImage = docker.build("message-producer", "./message-producer/deployment/resources")
+                    def testImage = docker.build("message-producer", "./message-producer/deployment/resources")
+                }
             }
         }
         stage('Deploy') {
