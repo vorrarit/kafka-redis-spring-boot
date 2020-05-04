@@ -1,16 +1,35 @@
 pipeline {
     agent any
 
+    environment {
+        subProjectPath = 'message-producer'
+        artifactId = 'message-producer'
+        version = '0.0.1-SNAPSHOT'
+        jarFile = env.artifactId + '-' + env.version + '.jar'
+        groupId = 'th.co.bitfactory.testkafka'
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo 'Building ...'
 
                 sh '''
-                cd message-producer
-                gradle bootJar
+                cd $subProjectPath
+                /opt/gradle/gradle-6.3/bin/gradle bootJar
+                cd ..
                 '''
+
+                stash includes: '${subProjectPath}/build/libs/${jarFile}', name 'jar-file'
             }
+        }
+
+        stage('Archive Artifact') {
+            unstash 'jar-file'
+
+            sh '''
+            /opt/maven/apache-maven-3.6.3/bin/mvn install:install-file -Dfile=$subProjectPath/build/libs/$jarFile -DgroupId=$groupId -DartifactId=$artifactId -Dversion=$version -Dpacking=jar -DgeneratePom=true
+            '''
         }
 
         stage('Deploy') {
