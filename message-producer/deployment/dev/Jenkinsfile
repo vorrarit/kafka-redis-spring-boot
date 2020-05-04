@@ -13,11 +13,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building ...'
-                
+
                 sh '''
                 cd $subProjectPath
                 /opt/gradle/gradle-6.3/bin/gradle bootJar
                 cd ..
+
+                ls $subProjectPaht/build/libs
                 '''
 
                 stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
