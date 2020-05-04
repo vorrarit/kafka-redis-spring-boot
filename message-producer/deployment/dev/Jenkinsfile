@@ -20,7 +20,9 @@ pipeline {
                 cd ..
                 '''
 
-                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jarfile'
+                scrit {
+                    stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jarfile'
+                }
             }
         }
 
