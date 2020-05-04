@@ -12,21 +12,21 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    sh '''
-                    cd $subProjectPath
-                    /opt/gradle/gradle-6.3/bin/gradle bootJar
-                    cd ..
-                    '''
+                echo 'Building ...'
+                
+                sh '''
+                cd $subProjectPath
+                /opt/gradle/gradle-6.3/bin/gradle bootJar
+                cd ..
+                '''
 
-                    stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jarfile'
-                }
+                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
             }
         }
 
         stage('Archive Artifact') {
             steps {
-                unstash 'jarfile'
+                unstash 'jar-file'
 
                 sh '''
                 /opt/maven/apache-maven-3.6.3/bin/mvn install:install-file -Dfile=$subProjectPath/build/libs/$jarFile -DgroupId=$groupId -DartifactId=$artifactId -Dversion=$version -Dpacking=jar -DgeneratePom=true
