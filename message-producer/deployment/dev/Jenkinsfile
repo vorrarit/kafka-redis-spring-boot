@@ -44,7 +44,7 @@ pipeline {
                 script {
                     unstash 'jar-file'
 
-                    def testImage = docker.build("${env.registry}/${env.artifactId}:${env.version}", "-f ./message-producer/deployment/resources/Dockerfile ./message-producer")
+                    def testImage = docker.build("${env.registry}/${env.artifactId}:${env.version}", "-f ./message-producer/deployment/resources/Dockerfile .")
                     testImage.push()
                 }
             }
