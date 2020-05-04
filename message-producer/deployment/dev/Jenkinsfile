@@ -22,7 +22,7 @@ pipeline {
                 ls $subProjectPath/build/libs
                 '''
 
-                echo $jarFile
+                echo "${env.jarFile}"
                 stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
             }
         }
