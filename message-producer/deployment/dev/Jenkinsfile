@@ -12,13 +12,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '''
-                cd $subProjectPath
-                /opt/gradle/gradle-6.3/bin/gradle bootJar
-                cd ..
-                '''
+                script {
+                    sh '''
+                    cd $subProjectPath
+                    /opt/gradle/gradle-6.3/bin/gradle bootJar
+                    cd ..
+                    '''
 
-                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jarfile'
+                    stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jarfile'
+                }
             }
         }
 
