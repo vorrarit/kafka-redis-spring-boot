@@ -8,7 +8,7 @@ pipeline {
 
                 sh '''
                 cd message-producer
-                /opt/gradle/gradle-6.3/bin/gradle bootJar
+                gradle bootJar
                 '''
             }
         }
