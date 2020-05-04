@@ -20,13 +20,13 @@ pipeline {
                 cd ..
                 '''
 
-                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jar-file'
+                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name 'jarfile'
             }
         }
 
         stage('Archive Artifact') {
             steps {
-                unstash 'jar-file'
+                unstash 'jarfile'
 
                 sh '''
                 /opt/maven/apache-maven-3.6.3/bin/mvn install:install-file -Dfile=$subProjectPath/build/libs/$jarFile -DgroupId=$groupId -DartifactId=$artifactId -Dversion=$version -Dpacking=jar -DgeneratePom=true
