@@ -47,7 +47,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 publishing {
 	repositories {
 		maven {
-			url = uri("http://localhost:8081/repository/maven-snapshots")
+			url = uri("http://172.18.0.1:8081/repository/maven-snapshots")
 			credentials {
 				username = "admin"
 				password = "password"
