@@ -19,7 +19,7 @@ pipeline {
                 /opt/gradle/gradle-6.3/bin/gradle bootJar
                 cd ..
 
-                ls $subProjectPaht/build/libs
+                ls $WORKSPACE/$subProjectPaht/build/libs
                 '''
 
                 stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
