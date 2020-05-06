@@ -21,13 +21,13 @@ pipeline {
                 cd ..
                 '''
 
-                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
+                // stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
             }
         }
 
         stage('Archive') {
             steps {
-                unstash 'jar-file'
+                // unstash 'jar-file'
 
                 sh '''
                 cd $subProjectPath
@@ -35,14 +35,14 @@ pipeline {
                 cd ..
                 '''
 
-                stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
+                // stash includes: "${env.subProjectPath}/build/libs/${env.jarFile}", name: 'jar-file'
             }
         }
 
         stage('Image') {
             steps {
                 script {
-                    unstash 'jar-file'
+                    // unstash 'jar-file'
 
                     docker.withRegistry('http://localhost:8083', 'docker-private-credential') {
                         def testImage = docker.build("${env.registry}/${env.artifactId}:${env.version}", "-f ./message-producer/deployment/resources/Dockerfile .")
